@@ -1,7 +1,7 @@
 # PostgreSQL-Remote-Setup
 His program allows you to remotely setup PostgreSQL on a server using Python and the Fabric library. It automates the process of installing PostgreSQL, creating a user, and creating a database.
 
-Prerequisites
+##Prerequisites
 Python 3
 Fabric library
 Installation
@@ -9,7 +9,7 @@ Clone or download the repository
 Install the Fabric library by running pip install fabric or pip3 install fabric
 Make sure your system is up-to-date by running sudo apt-get update
 Usage
-Copy code
+##Copy code
 python3 psql.py host user password --version version_number --user_name user_name --user_password user_password --db_name db_name
 Arguments
 host: IP or hostname of the remote server
