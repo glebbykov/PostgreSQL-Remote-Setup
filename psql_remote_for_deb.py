@@ -42,7 +42,7 @@ if __name__ == '__main__':
     parser.add_argument('host', help='Remote host address')
     parser.add_argument('user', help='Remote host username')
     parser.add_argument('password', help='Remote host password')
-    parser.add_argument('--version', help='PostgreSQL version to install', default='latest')
+    parser.add_argument('--version', help='PostgreSQL version to install', default='13')
     parser.add_argument('--user_name', help='PostgreSQL user name', default='newuser')
     parser.add_argument('--user_password', help='PostgreSQL user password', default='newpassword')
     parser.add_argument('--db_name', help='PostgreSQL db name', default='newdb')
