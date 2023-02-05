@@ -1,0 +1,8 @@
+{
+  "host": "remote_host",
+  "user": "test",
+  "version": "13",
+  "user_name": "newuser",
+  "user_password": "newpassword",
+  "db_name": "newdb"
+}

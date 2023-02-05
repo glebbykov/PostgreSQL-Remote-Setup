@@ -1,10 +1,11 @@
 import argparse
 import logging
+import json
 from fabric import Connection
 
 logging.basicConfig(level=logging.DEBUG, format='%(asctime)s - %(levelname)s - %(message)s')
 
-def install_postgres(c, version='latest'):
+def install_postgres(c, version='13'):
     try:
         c.run('sudo apt-get update')
         c.run(f'sudo apt-get install -y postgresql-{version}')
@@ -27,25 +28,28 @@ def create_database(c, dbname, owner):
     except:
         logging.error(f'Failed to create database {dbname}')
 
-def setup_remote_postgres(host, user, password, user_name, user_password, db_name, version='latest'):
+def setup_remote_postgres(input_data):
+    host = input_data['host']
+    user = input_data['user']
+    version = input_data.get('version', 'latest')
+    user_name = input_data.get('user_name', 'newuser')
+    user_password = input_data.get('user_password', 'newpassword')
+    db_name = input_data.get('db_name', 'newdb')
     try:
-        with Connection(host, user=user, connect_kwargs={"password": password}) as c:
+        with Connection(host, user) as c:
             install_postgres(c, version)
             create_user(c, user_name, user_password)
             create_database(c, db_name, user_name)
     except Exception as e:
         logging.error(f'Failed to setup remote PostgreSQL: {e}')
 
-
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Setup remote PostgreSQL')
-    parser.add_argument('host', help='Remote host address')
-    parser.add_argument('user', help='Remote host username')
-    parser.add_argument('password', help='Remote host password')
-    parser.add_argument('--version', help='PostgreSQL version to install', default='13')
-    parser.add_argument('--user_name', help='PostgreSQL user name', default='newuser')
-    parser.add_argument('--user_password', help='PostgreSQL user password', default='newpassword')
-    parser.add_argument('--db_name', help='PostgreSQL db name', default='newdb')
+    parser.add_argument('input_file', help='Input JSON file')
     args = parser.parse_args()
 
-    setup_remote_postgres(args.host, args.user, args.password, args.user_name, args.user_password, args.db_name, args.version)
+
+    with open(args.input_file) as f:
+        input_data = json.load(f)
+
+    setup_remote_postgres(input_data)
