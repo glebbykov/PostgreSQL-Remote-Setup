@@ -11,7 +11,9 @@ Make sure your system is up-to-date by running sudo apt-get update
 Usage
 
 ## Copy code
+```
 python3 psql.py host user password --version version_number --user_name user_name --user_password user_password --db_name db_name
+```
 Arguments
 host: IP or hostname of the remote server
 user: username for the remote server
